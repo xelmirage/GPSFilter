@@ -149,8 +149,8 @@ public:
 typedef vector<PointL> POINTSL; 
 typedef vector<POINTSL> POINTSLV; 
 typedef vector<dist> DISTS;
-POINTSL pointsL;
-POINTSLV vector_pointsL;
+POINTSL pointsL;//航带
+POINTSLV vector_pointsL;//航带数组
 vector<string> images;
 void LLtoUTM(double Long, double Lat) {
 	//double PI=3.1415926535897932;
@@ -273,7 +273,7 @@ void build_belt()
 	for(j=vector_pointsL.begin();j!=vector_pointsL.end();)
 	{
 		//cout<<j->size()<<endl;
-
+		//剔除照片数小于10的航带
 		if(j->size()<10)
 		{
 			
@@ -336,6 +336,8 @@ void build_belt()
 		= "charset=Ascii "+tag;
 
 		 image->writeMetadata();
+
+
 
 
 
