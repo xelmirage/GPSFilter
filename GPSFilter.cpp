@@ -245,9 +245,10 @@ void build_belt()
 	dists.clear();
 	string tag;
 	tag.clear();
-	string _outputFile="f:\\kl\\belt_result-kl02.txt";
+	string _outputFile="f:\\kl\\divide.txt";
 	ofstream belt_out(_outputFile.c_str());
 	POINTSL::iterator i;
+	DISTS row;
 	for(i=pointsL.begin();i!=pointsL.end()-1;++i)
 	{
 		if(!i->selected)
@@ -292,27 +293,33 @@ void build_belt()
 	}
 
 
-	for(j=vector_pointsL.begin();j!=vector_pointsL.end();++j)
+	for(j=vector_pointsL.begin();j!=vector_pointsL.begin()+1;++j)
 	{
 		
 		
 		for(i=(*j).begin();i!=(*j).end()-1;++i)
 		{
+			POINTSLV::iterator belt_iterator;//º½´øÃ¶¾ÙÆ÷
 			dists.clear();
 			tag.clear();
 			int img_id;
 			img_id=lexical_cast<int>(i->id);
-			tag="selected ";
+			row.clear();
+			/*tag="selected ";
 			tag+=lexical_cast<std::string>(i->id);
 			tag+=" pairs_with ";
 			tag+=lexical_cast<std::string>((i+1)->id);
-
+			
 			belt_out<<images[img_id-1]<<endl;
-			belt_out<<i->id<<" pairs_with "<<(i+1)->id;
-			if(j!=vector_pointsL.end()-1)
+			belt_out<<i->id<<" pairs_with "<<(i+1)->id;*/
+			cout<<i->id<<",";
+			belt_out<<i->id<<",";
+
+			for(belt_iterator=j+1;belt_iterator!=vector_pointsL.end();++belt_iterator)
 			{
+				dists.clear();
 				POINTSL::iterator i1;
-				for(i1=(j+1)->begin();i1!=(j+1)->end();++i1)
+				for(i1=(*belt_iterator).begin();i1!=(*belt_iterator).end();++i1)
 				{
 					
 					long d=i->distance(*i1);
@@ -321,31 +328,40 @@ void build_belt()
 
 				}
 				sort(dists.begin(),dists.end());
-				for(int ii=0;ii<3;ii++)
+				
+				for(int ii=0;ii<1;ii++)
 				{
-					tag+=","+lexical_cast<std::string>(dists[ii].id);
-					belt_out<<","<<dists[ii].id;
+					cout<<dists[ii].id<<",";
+					belt_out<<dists[ii].id<<",";
+
+					row.push_back(dists[ii]);
+					//tag+=","+lexical_cast<std::string>(dists[ii].id);
+					//belt_out<<","<<dists[ii].id;
 				}
 				
+
+				
 			}
-			Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[img_id-1]);
-		assert (image.get() != 0);
-		image->readMetadata();
-		Exiv2::ExifData &exifData = image->exifData();
-		exifData["Exif.Photo.UserComment"]
-		= "charset=Ascii "+tag;
-
-		 image->writeMetadata();
-
-
-
-
-
-
-
-
-			cout<<tag<<endl;
+			cout<<endl;
 			belt_out<<endl;
+			/*Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[img_id-1]);
+			assert (image.get() != 0);
+			image->readMetadata();
+			Exiv2::ExifData &exifData = image->exifData();
+			exifData["Exif.Photo.UserComment"]
+			= "charset=Ascii "+tag;
+
+			image->writeMetadata();*/
+
+
+
+
+
+
+
+
+			
+			
 
 
 
@@ -365,7 +381,7 @@ void build_belt()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	std::string				_inputFile,line,_outputFile,_inputDIR;
-	_inputFile="f:\\kl01\\01.txt";
+	_inputFile="f:\\kl\\02.txt";
 	_inputDIR="f:\\kl01";
 	_outputFile="f:\\kl01\\result-kl01.txt";
 	ifstream data(_inputFile.c_str());
@@ -442,14 +458,14 @@ int _tmain(int argc, _TCHAR* argv[])
 			miny=UTMNorthing;
 		}
 
-Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[j]);
-		assert (image.get() != 0);
-		image->readMetadata();
-		Exiv2::ExifData &exifData = image->exifData();
-		exifData["Exif.Photo.UserComment"]
-		= "charset=Ascii thrown";
-		cout<<images[j]<<endl;
-		image->writeMetadata();
+//Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[j]);
+//		assert (image.get() != 0);
+//		image->readMetadata();
+//		Exiv2::ExifData &exifData = image->exifData();
+//		exifData["Exif.Photo.UserComment"]
+//		= "charset=Ascii thrown";
+//		cout<<images[j]<<endl;
+//		image->writeMetadata();
 j++;
 	}
 	POINTSL::iterator i;
