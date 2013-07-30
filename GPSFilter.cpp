@@ -311,7 +311,7 @@ void build_belt()
 	dists.clear();
 	string tag;
 	tag.clear();
-	string _outputFile="f:\\kl\\divide.txt";
+	string _outputFile="h:\\kl\\kl\\divide.txt";
 	ofstream belt_out(_outputFile.c_str());
 	POINTSL::iterator i;
 	
@@ -406,7 +406,7 @@ void build_belt()
 
 			for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
 			{
-				cout<<images[(*row_iterator).id]<<endl;
+				cout<<images[(*row_iterator).id-1]<<endl;
 				belt_out<<images[(*row_iterator).id-1]<<" ";
 
 			}
@@ -453,9 +453,9 @@ void build_belt()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	std::string				_inputFile,line,_outputFile,_inputDIR;
-	_inputFile="f:\\kl\\02.txt";
-	_inputDIR="f:\\kl";
-	_outputFile="f:\\kl01\\result-kl01.txt";
+	_inputFile="h:\\kl\\kl\\02.txt";
+	_inputDIR="h:\\kl\\kl";
+	_outputFile="h:\\kl\\kl\\result-kl01.txt";
 	ifstream data(_inputFile.c_str());
 	ofstream out(_outputFile.c_str());
 	vector<double> YawVec;
