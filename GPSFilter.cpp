@@ -141,16 +141,19 @@ struct PointL
 public:
 	int id;
 	long x, y;
-  float yaw, dyaw, roll;
-  
-  int yawint;
-  bool selected;
+	float yaw, dyaw, roll;
+
+	int yawint;
+	bool selected;
 };
 typedef vector<PointL> POINTSL; 
 typedef vector<POINTSL> POINTSLV; 
 typedef vector<dist> DISTS;
+typedef vector<DISTS> DISTSV;
 POINTSL pointsL;//航带
 POINTSLV vector_pointsL;//航带数组
+DISTSV rows; //存储横向排的数组
+DISTS row;
 vector<string> images;
 void LLtoUTM(double Long, double Lat) {
 	//double PI=3.1415926535897932;
@@ -203,52 +206,115 @@ void LLtoUTM(double Long, double Lat) {
 int findmost()
 {
 	int len=pointsL.size();
-  int* data=new int[len];
-  int* sum=new int[len];
-  int i=0, j=0, datalen=0, most=0;
-  bool findflag;
-  for (i=0;i<len;i++)
-  {
-    findflag=false;
-    for (j=0;j<datalen;j++)
-    {
-      if (data[j]==pointsL[i].yawint)
-      {
-        sum[j]+=1;
-        findflag=true;
-      }
-    }
-    if (!findflag)
-    {
-      data[j]=pointsL[i].yawint;
-      datalen++;
-      sum[j]=0;
-    }
-  }
-  for (i=0;i<datalen;i++)
-  {
+	int* data=new int[len];
+	int* sum=new int[len];
+	int i=0, j=0, datalen=0, most=0;
+	bool findflag;
+	for (i=0;i<len;i++)
+	{
+		findflag=false;
+		for (j=0;j<datalen;j++)
+		{
+			if (data[j]==pointsL[i].yawint)
+			{
+				sum[j]+=1;
+				findflag=true;
+			}
+		}
+		if (!findflag)
+		{
+			data[j]=pointsL[i].yawint;
+			datalen++;
+			sum[j]=0;
+		}
+	}
+	for (i=0;i<datalen;i++)
+	{
 
-    if (sum[i]>sum[most])
-      most=i;
-  }
+		if (sum[i]>sum[most])
+			most=i;
+	}
 
 
 
-  return data[most];
+	return data[most];
 }
 
 
 
+void find_nearest(POINTSL::iterator point_position,POINTSLV::iterator belt_position)
+{
+	DISTS dists;
+	POINTSL::iterator point_iterato;
+	POINTSLV::iterator belt_iterator=belt_position+1;
+
+	if(belt_iterator==vector_pointsL.end())
+	{
+		cout<<endl;
+		return;
+	}
+
+
+
+
+	dists.clear();
+	POINTSL::iterator i1;
+	for(i1=(*belt_iterator).begin();i1!=(*belt_iterator).end();++i1)
+	{
+
+		long d=point_position->distance(*i1);
+		dist tempDist(i1->id,d,0);
+		dists.push_back(tempDist);
+
+	}
+	sort(dists.begin(),dists.end());
+
+	for(int ii=0;ii<1;ii++)
+	{
+		cout<<dists[ii].id<<",";
+		//					belt_out<<dists[ii].id<<",";
+
+		row.push_back(dists[ii]);
+		//tag+=","+lexical_cast<std::string>(dists[ii].id);
+		//belt_out<<","<<dists[ii].id;
+	}
+
+	
+
+	for(i1=(*belt_iterator).begin();i1!=(*belt_iterator).end();++i1)
+	{
+		if(dists[0].id==i1->id)
+		{
+			find_nearest(i1,belt_iterator);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	//			belt_out<<endl;
+
+
+
+}
 void build_belt()
 {
 	DISTS dists;
 	dists.clear();
 	string tag;
 	tag.clear();
-	string _outputFile="f:\\kl\\divide.txt";
+	string _outputFile="f:\\kl\\belt_result-kl02.txt";
 	ofstream belt_out(_outputFile.c_str());
 	POINTSL::iterator i;
-	DISTS row;
+
 	for(i=pointsL.begin();i!=pointsL.end()-1;++i)
 	{
 		if(!i->selected)
@@ -277,8 +343,8 @@ void build_belt()
 		//剔除照片数小于10的航带
 		if(j->size()<10)
 		{
-			
-			
+
+
 			vector_pointsL.erase(j);
 			//continue;
 			//j=vector_pointsL.begin();
@@ -286,40 +352,43 @@ void build_belt()
 		}
 		else
 		{
-		++j;
+			++j;
 		}
-	
+
 
 	}
+	rows.clear();
 
 
 	for(j=vector_pointsL.begin();j!=vector_pointsL.begin()+1;++j)
 	{
-		
-		
+
+
 		for(i=(*j).begin();i!=(*j).end()-1;++i)
 		{
-			POINTSLV::iterator belt_iterator;//航带枚举器
 			dists.clear();
 			tag.clear();
 			int img_id;
 			img_id=lexical_cast<int>(i->id);
-			row.clear();
-			/*tag="selected ";
+			tag="selected ";
 			tag+=lexical_cast<std::string>(i->id);
 			tag+=" pairs_with ";
 			tag+=lexical_cast<std::string>((i+1)->id);
-			
+
+
 			belt_out<<images[img_id-1]<<endl;
-			belt_out<<i->id<<" pairs_with "<<(i+1)->id;*/
+			belt_out<<i->id<<" pairs_with "<<(i+1)->id;
 			cout<<i->id<<",";
 			belt_out<<i->id<<",";
 
-			for(belt_iterator=j+1;belt_iterator!=vector_pointsL.end();++belt_iterator)
+
+			//find_nearest(i,j);
+			belt_out<<images[img_id-1]<<endl;
+			belt_out<<i->id<<" pairs_with "<<(i+1)->id;
+			if(j!=vector_pointsL.end()-1)
 			{
-				dists.clear();
 				POINTSL::iterator i1;
-				for(i1=(*belt_iterator).begin();i1!=(*belt_iterator).end();++i1)
+				for(i1=(j+1)->begin();i1!=(j+1)->end();++i1)
 				{
 					
 					long d=i->distance(*i1);
@@ -328,21 +397,49 @@ void build_belt()
 
 				}
 				sort(dists.begin(),dists.end());
-				
-				for(int ii=0;ii<1;ii++)
+				for(int ii=0;ii<3;ii++)
 				{
-					cout<<dists[ii].id<<",";
-					belt_out<<dists[ii].id<<",";
-
-					row.push_back(dists[ii]);
-					//tag+=","+lexical_cast<std::string>(dists[ii].id);
-					//belt_out<<","<<dists[ii].id;
+					tag+=","+lexical_cast<std::string>(dists[ii].id);
+					belt_out<<","<<dists[ii].id;
 				}
 				
+			}
+			Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[img_id-1]);
+			assert (image.get() != 0);
+			image->readMetadata();
+			Exiv2::ExifData &exifData = image->exifData();
+			exifData["Exif.Photo.UserComment"]
+			= "charset=Ascii "+tag;
 
-				
+
+
+
+
+			rows.push_back(row);
+			
+			cout<<endl;
+			cout<<images[img_id-1]<<endl;
+
+			DISTS::iterator row_iterator;
+			for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
+			{
+				belt_out<<row_iterator->id<<",";
+			}
+			belt_out<<endl;
+			belt_out<<images[i->id-1]<<" ";                          //重要：从images[]数组调用时要将id-1，因为排id的时候没有0
+
+
+			for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
+			{
+				cout<<images[(*row_iterator).id]<<endl;
+				belt_out<<images[(*row_iterator).id-1]<<" ";
+
 			}
 			cout<<endl;
+
+
+
+			
 			belt_out<<endl;
 			/*Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[img_id-1]);
 			assert (image.get() != 0);
@@ -350,18 +447,27 @@ void build_belt()
 			Exiv2::ExifData &exifData = image->exifData();
 			exifData["Exif.Photo.UserComment"]
 			= "charset=Ascii "+tag;
-
-			image->writeMetadata();*/
-
-
-
-
-
-
-
+=======
 
 			
-			
+>>>>>>> parent of 25f5b3c... 鍒版瘡涓�鑸甫鐨勫瀭瓒筹紝娌℃湁鐢ㄨ凯浠?
+
+		 image->writeMetadata();
+
+
+
+
+
+
+
+
+<<<<<<< HEAD
+
+
+=======
+			cout<<tag<<endl;
+			belt_out<<endl;
+>>>>>>> parent of 25f5b3c... 鍒版瘡涓�鑸甫鐨勫瀭瓒筹紝娌℃湁鐢ㄨ凯浠?*/
 
 
 
@@ -381,16 +487,18 @@ void build_belt()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	std::string				_inputFile,line,_outputFile,_inputDIR;
+
 	_inputFile="f:\\kl\\02.txt";
-	_inputDIR="f:\\kl01";
+	_inputDIR="f:\\kl";
+
 	_outputFile="f:\\kl01\\result-kl01.txt";
 	ifstream data(_inputFile.c_str());
 	ofstream out(_outputFile.c_str());
 	vector<double> YawVec;
 	vector<string> SplitVec;
-	
+
 	double yawTemp;
-	
+
 	long minx=0,miny=0;
 	int j=0;
 
@@ -418,7 +526,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 
 	}
-	
+
 	if (data.bad())
 	{
 		cerr << "ERROR: could not open file: '" << _inputFile << "'!" << endl;
@@ -426,7 +534,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	while (data.good()) {
-		
+
 		std::getline(data, line);
 		//cout<<line<<endl;
 		SplitVec.clear();
@@ -444,7 +552,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		roll=lexical_cast<double>(SplitVec[8]);
 		LLtoUTM(x,y);
 		PointL *p=new PointL(id,UTMEasting,UTMNorthing,yaw,roll);
-		
+
 		pointsL.push_back(*p);
 
 
@@ -458,15 +566,17 @@ int _tmain(int argc, _TCHAR* argv[])
 			miny=UTMNorthing;
 		}
 
-//Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[j]);
-//		assert (image.get() != 0);
-//		image->readMetadata();
-//		Exiv2::ExifData &exifData = image->exifData();
-//		exifData["Exif.Photo.UserComment"]
-//		= "charset=Ascii thrown";
-//		cout<<images[j]<<endl;
-//		image->writeMetadata();
-j++;
+
+		Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[j]);
+				assert (image.get() != 0);
+				image->readMetadata();
+				Exiv2::ExifData &exifData = image->exifData();
+				exifData["Exif.Photo.UserComment"]
+				= "charset=Ascii thrown";
+				cout<<images[j]<<endl;
+				image->writeMetadata();
+		j++;
+
 	}
 	POINTSL::iterator i;
 	PointL minPoint(0,minx,miny,0,0);
@@ -505,24 +615,24 @@ j++;
 
 	int most1=findmost(),most2;
 	if (most1>36)
-    most2=most1-36;
-  else
-    most2=36+most1;
+		most2=most1-36;
+	else
+		most2=36+most1;
 
 
 	for (i=pointsL.begin();i<pointsL.end();++i)
-  {
-    if (( (*i).yawint==most1||(*i).yawint==(most2))&&(*i).dyaw<3)
-    {
-      (*i).selected=true;
+	{
+		if (( (*i).yawint==most1||(*i).yawint==(most2))&&(*i).dyaw<3)
+		{
+			(*i).selected=true;
 
 
-    }
-	//out<<(*i).id<<"   yawint  "<<(*i).yawint<<"  roll  "<<(*i).roll<<" dyaw:"<<(*i).dyaw<<"  selected "<<i->selected<<endl;
-	//cout<<(*i).id<<"   yawint  "<<(*i).yawint<<"  roll  "<<(*i).roll<<" dyaw:"<<(*i).dyaw<<"  selected "<<i->selected<<endl;
-	//cout<<(*i).id<<"   yawint  "<<(*i).yawint<<"  roll  "<<(*i).roll<<" dyaw:"<<(*i).dyaw<<"  selected "<<i->selected<<endl;
-  }
-	
+		}
+		//out<<(*i).id<<"   yawint  "<<(*i).yawint<<"  roll  "<<(*i).roll<<" dyaw:"<<(*i).dyaw<<"  selected "<<i->selected<<endl;
+		//cout<<(*i).id<<"   yawint  "<<(*i).yawint<<"  roll  "<<(*i).roll<<" dyaw:"<<(*i).dyaw<<"  selected "<<i->selected<<endl;
+		//cout<<(*i).id<<"   yawint  "<<(*i).yawint<<"  roll  "<<(*i).roll<<" dyaw:"<<(*i).dyaw<<"  selected "<<i->selected<<endl;
+	}
+
 	//cout<<most1<<"     "<<most2<<endl;
 
 
