@@ -311,11 +311,14 @@ void build_belt()
 	dists.clear();
 	string tag;
 	tag.clear();
-	string _outputFile="f:\\kl\\divide.txt";
+	string _outputFile="f:\\kl\\belt_result-kl02.txt";
 	ofstream belt_out(_outputFile.c_str());
 	POINTSL::iterator i;
+<<<<<<< HEAD
 	
 	//DISTSV rows;
+=======
+>>>>>>> parent of 25f5b3c... 到每一航带的垂足，没有用迭代
 	for(i=pointsL.begin();i!=pointsL.end()-1;++i)
 	{
 		if(!i->selected)
@@ -361,22 +364,21 @@ void build_belt()
 	rows.clear();
 
 
-	for(j=vector_pointsL.begin();j!=vector_pointsL.begin()+1;++j)
+	for(j=vector_pointsL.begin();j!=vector_pointsL.end();++j)
 	{
 
 
 		for(i=(*j).begin();i!=(*j).end()-1;++i)
 		{
-			POINTSLV::iterator belt_iterator;//����ö����
 			dists.clear();
 			tag.clear();
 			int img_id;
 			img_id=lexical_cast<int>(i->id);
-			row.clear();
-			/*tag="selected ";
+			tag="selected ";
 			tag+=lexical_cast<std::string>(i->id);
 			tag+=" pairs_with ";
 			tag+=lexical_cast<std::string>((i+1)->id);
+<<<<<<< HEAD
 
 			belt_out<<images[img_id-1]<<endl;
 			belt_out<<i->id<<" pairs_with "<<(i+1)->id;*/
@@ -422,8 +424,38 @@ void build_belt()
 			Exiv2::ExifData &exifData = image->exifData();
 			exifData["Exif.Photo.UserComment"]
 			= "charset=Ascii "+tag;
+=======
 
-			image->writeMetadata();*/
+			belt_out<<images[img_id-1]<<endl;
+			belt_out<<i->id<<" pairs_with "<<(i+1)->id;
+			if(j!=vector_pointsL.end()-1)
+			{
+				POINTSL::iterator i1;
+				for(i1=(j+1)->begin();i1!=(j+1)->end();++i1)
+				{
+					
+					long d=i->distance(*i1);
+					dist tempDist(i1->id,d,0);
+					dists.push_back(tempDist);
+
+				}
+				sort(dists.begin(),dists.end());
+				for(int ii=0;ii<3;ii++)
+				{
+					tag+=","+lexical_cast<std::string>(dists[ii].id);
+					belt_out<<","<<dists[ii].id;
+				}
+				
+			}
+			Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[img_id-1]);
+		assert (image.get() != 0);
+		image->readMetadata();
+		Exiv2::ExifData &exifData = image->exifData();
+		exifData["Exif.Photo.UserComment"]
+		= "charset=Ascii "+tag;
+>>>>>>> parent of 25f5b3c... 到每一航带的垂足，没有用迭代
+
+		 image->writeMetadata();
 
 
 
@@ -432,8 +464,13 @@ void build_belt()
 
 
 
+<<<<<<< HEAD
 
 
+=======
+			cout<<tag<<endl;
+			belt_out<<endl;
+>>>>>>> parent of 25f5b3c... 到每一航带的垂足，没有用迭代
 
 
 
@@ -453,8 +490,13 @@ void build_belt()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	std::string				_inputFile,line,_outputFile,_inputDIR;
+<<<<<<< HEAD
 	_inputFile="f:\\kl\\02.txt";
 	_inputDIR="f:\\kl";
+=======
+	_inputFile="f:\\kl01\\01.txt";
+	_inputDIR="f:\\kl01";
+>>>>>>> parent of 25f5b3c... 到每一航带的垂足，没有用迭代
 	_outputFile="f:\\kl01\\result-kl01.txt";
 	ifstream data(_inputFile.c_str());
 	ofstream out(_outputFile.c_str());
@@ -530,6 +572,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			miny=UTMNorthing;
 		}
 
+<<<<<<< HEAD
 		//Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[j]);
 		//		assert (image.get() != 0);
 		//		image->readMetadata();
@@ -539,6 +582,17 @@ int _tmain(int argc, _TCHAR* argv[])
 		//		cout<<images[j]<<endl;
 		//		image->writeMetadata();
 		j++;
+=======
+Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[j]);
+		assert (image.get() != 0);
+		image->readMetadata();
+		Exiv2::ExifData &exifData = image->exifData();
+		exifData["Exif.Photo.UserComment"]
+		= "charset=Ascii thrown";
+		cout<<images[j]<<endl;
+		image->writeMetadata();
+j++;
+>>>>>>> parent of 25f5b3c... 到每一航带的垂足，没有用迭代
 	}
 	POINTSL::iterator i;
 	PointL minPoint(0,minx,miny,0,0);
