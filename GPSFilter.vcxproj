@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{03D08C54-D3B6-4510-92D4-E7CC8E4F618C}</ProjectGuid>
+    <RootNamespace>GPSFilter</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>E:/huginbase64/hugin-build/src;E:/huginbase64/hugin-2012.0.0/src/hugin_base;E:/huginbase64/hugin-2012.0.0/src/foreign/vigra;E:/huginbase64/hugin-2012.0.0/src/celeste;E:/huginbase64/hugin-build/src/celeste;E:/huginbase64/hugin-2012.0.0/src;E:/huginbase64/wxWidgets-2.9.4/src/tiff/libtiff;E:/huginbase64/wxWidgets-2.9.4/src/jpeg;E:/huginbase64/wxWidgets-2.9.4/src/zlib;E:/huginbase64/wxWidgets-2.9.4/src/png;E:/huginbase64/Deploy/include;E:/huginbase64/exiv2-0.18.1/msvc/include;E:/huginbase64/freeglut-2.6.0/include;E:/huginbase64/glew/include;E:/huginbase64/libpano;E:/huginbase64/boost_1_43_0;E:/huginbase64/hugin-2012.0.0/src/foreign;E:/huginbase64/lensfun/include/lensfun;E:/huginbase64/hugin-2012.0.0/src/foreign/getopt/include;E:/huginbase64/wxWidgets-2.9.4/lib/vc_lib/mswu;E:/huginbase64/wxWidgets-2.9.4/include;E:/huginbase64/hugin-2012.0.0/src/hugin1;E:/huginbase64/tclap-1.2.0/include;E:/huginbase64/hugin-2012.0.0/src/foreign/zthread/include;E:/huginbase64/hugin-2012.0.0/src/hugin_cpfind/.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libboost_regex-vc100-mt-s-1_43.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:/huginbase64/boost_1_43_0/stage/lib;E:/huginbase64/boost_1_43_0/stage/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>E:/huginbase64/hugin-build/src;E:/huginbase64/hugin-2012.0.0/src/hugin_base;E:/huginbase64/hugin-2012.0.0/src/foreign/vigra;E:/huginbase64/hugin-2012.0.0/src/celeste;E:/huginbase64/hugin-build/src/celeste;E:/huginbase64/hugin-2012.0.0/src;E:/huginbase64/wxWidgets-2.9.4/src/tiff/libtiff;E:/huginbase64/wxWidgets-2.9.4/src/jpeg;E:/huginbase64/wxWidgets-2.9.4/src/zlib;E:/huginbase64/wxWidgets-2.9.4/src/png;E:/huginbase64/Deploy/include;E:/huginbase64/exiv2-0.18.1/msvc/include;E:/huginbase64/freeglut-2.6.0/include;E:/huginbase64/glew/include;E:/huginbase64/libpano;E:/huginbase64/boost_1_43_0;E:/huginbase64/hugin-2012.0.0/src/foreign;E:/huginbase64/lensfun/include/lensfun;E:/huginbase64/hugin-2012.0.0/src/foreign/getopt/include;E:/huginbase64/wxWidgets-2.9.4/lib/vc_lib/mswu;E:/huginbase64/wxWidgets-2.9.4/include;E:/huginbase64/hugin-2012.0.0/src/hugin1;E:/huginbase64/tclap-1.2.0/include;E:/huginbase64/hugin-2012.0.0/src/foreign/zthread/include;E:/huginbase64/hugin-2012.0.0/src/hugin_cpfind/.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libboost_regex-vc100-mt-s-1_43.lib;E:\huginbase64\hugin2013-build\src\hugin_cpfind\localfeatures\RelWithDebInfo\localfeatures.lib;E:\huginbase64\hugin-build\src\foreign\zthread\src\RelWithDebInfo\ZThread.lib;E:\huginbase64\hugin-build\src\foreign\vigra\vigra_impex\RelWithDebInfo\huginvigraimpex.lib;E:\huginbase64\Deploy\lib\Release\Imath.lib;E:\huginbase64\Deploy\lib\Release\IlmImf.lib;E:\huginbase64\Deploy\lib\Release\Iex.lib;E:\huginbase64\Deploy\lib\Release\Half.lib;E:\huginbase64\Deploy\lib\Release\IlmThread.lib;E:\huginbase64\wxWidgets-2.9.4\lib\vc_lib\wxjpeg.lib;E:\huginbase64\wxWidgets-2.9.4\lib\vc_lib\wxtiff.lib;E:\huginbase64\wxWidgets-2.9.4\lib\vc_lib\wxpng.lib;E:\huginbase64\wxWidgets-2.9.4\lib\vc_lib\wxzlib.lib;E:\huginbase64\exiv2-0.18.1\msvc\lib\exiv2.lib;E:\huginbase64\exiv2-0.18.1\msvc\lib\xmpsdk.lib;E:\huginbase64\exiv2-0.18.1\msvc\lib\Libexpat.lib;E:\huginbase64\hugin-build\src\hugin_base\RelWithDebInfo\huginbase.lib;E:\huginbase64\hugin-build\src\foreign\getopt\RelWithDebInfo\hugingetopt.lib;E:\huginbase64\libpano\pano13\Release CMD\x64\pano13.lib;E:\huginbase64\hugin-build\src\foreign\levmar\RelWithDebInfo\huginlevmar.lib;E:\huginbase64\hugin-build\src\celeste\RelWithDebInfo\celeste.lib;E:\huginbase64\hugin-build\src\foreign\flann\RelWithDebInfo\flann_cpp.lib;E:\huginbase64\hugin-build\src\hugin_base\makefilelib\RelWithDebInfo\makefilelib.lib;E:\huginbase64\boost_1_43_0\stage\lib\libboost_thread-vc100-mt-s-1_43.lib;E:\huginbase64\boost_1_43_0\stage\lib\libboost_date_time-vc100-mt-s-1_43.lib;E:\huginbase64\boost_1_43_0\stage\lib\libboost_regex-vc100-mt-s-1_43.lib;E:\huginbase64\boost_1_43_0\stage\lib\libboost_filesystem-vc100-mt-s-1_43.lib;E:\huginbase64\boost_1_43_0\stage\lib\libboost_iostreams-vc100-mt-s-1_43.lib;E:\huginbase64\boost_1_43_0\stage\lib\libboost_system-vc100-mt-s-1_43.lib;E:\huginbase64\boost_1_43_0\stage\lib\libboost_signals-vc100-mt-s-1_43.lib;E:\huginbase64\glew\lib\glew32s.lib;glu32.lib;opengl32.lib;E:\huginbase64\freeglut-2.6.0\VisualStudio2008Static\Release\freeglut_static.lib;E:\huginbase64\lensfun\lib\lensfun.lib;E:\huginbase64\lensfun\lib\tre_regex.lib;E:\huginbase64\glib-2.28.8\lib\glib.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:/huginbase64/boost_1_43_0/stage/lib;E:/huginbase64/boost_1_43_0/stage/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) $(SolutionDir)\INSTALL\FILES\bin\$(TargetFileName)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="GPSFilter.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
