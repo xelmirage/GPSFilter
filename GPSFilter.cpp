@@ -202,7 +202,6 @@ void LLtoUTM(double Long, double Lat) {
 	// 南半球纬度起点为10000000.0m
 	UTMNorthing = UTMNorthing + FN;
 }
-
 int findmost()
 {
 	int len=pointsL.size();
@@ -239,9 +238,6 @@ int findmost()
 
 	return data[most];
 }
-
-
-
 void find_nearest(POINTSL::iterator point_position,POINTSLV::iterator belt_position)
 {
 	DISTS dists;
@@ -279,7 +275,7 @@ void find_nearest(POINTSL::iterator point_position,POINTSLV::iterator belt_posit
 		//belt_out<<","<<dists[ii].id;
 	}
 
-	
+
 
 	for(i1=(*belt_iterator).begin();i1!=(*belt_iterator).end();++i1)
 	{
@@ -305,13 +301,39 @@ void find_nearest(POINTSL::iterator point_position,POINTSLV::iterator belt_posit
 
 
 }
+bool is_next_valid(int id,int step)
+{
+	POINTSL::iterator point_iterator;
+	POINTSLV::iterator belt_iterator;
+	for(belt_iterator=vector_pointsL.begin();belt_iterator!=vector_pointsL.end();++belt_iterator)
+	{
+		for(point_iterator=(*belt_iterator).begin();point_iterator!=(*belt_iterator).end();++point_iterator)
+		{
+			if((*point_iterator).id==id)
+			{
+				if((point_iterator+step)<(*belt_iterator).end())
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return false;
+}
 void build_belt()
 {
+	POINTSLV::iterator belt_iterator;
+	int row_step=2;
 	DISTS dists;
 	dists.clear();
 	string tag;
 	tag.clear();
-	string _outputFile="f:\\kl\\belt_result-kl02.txt";
+	bool valid;
+	string _outputFile="h:\\kl\\kl\\a.txt";
 	ofstream belt_out(_outputFile.c_str());
 	POINTSL::iterator i;
 
@@ -364,117 +386,121 @@ void build_belt()
 	{
 
 
-		for(i=(*j).begin();i!=(*j).end()-1;++i)
+		for(i=(*j).begin();i<(*j).end()-1;i+=row_step)
 		{
 			dists.clear();
-			tag.clear();
+			
 			int img_id;
 			img_id=lexical_cast<int>(i->id);
-			tag="selected ";
-			tag+=lexical_cast<std::string>(i->id);
-			tag+=" pairs_with ";
-			tag+=lexical_cast<std::string>((i+1)->id);
+			
 
 
-			belt_out<<images[img_id-1]<<endl;
-			belt_out<<i->id<<" pairs_with "<<(i+1)->id;
+			//belt_out<<images[img_id-1]<<endl;
+
 			cout<<i->id<<",";
-			belt_out<<i->id<<",";
+
 
 
 			//find_nearest(i,j);
-			belt_out<<images[img_id-1]<<endl;
-			belt_out<<i->id<<" pairs_with "<<(i+1)->id;
-			if(j!=vector_pointsL.end()-1)
-			{
-				POINTSL::iterator i1;
-				for(i1=(j+1)->begin();i1!=(j+1)->end();++i1)
+			//belt_out<<images[img_id-1]<<endl;
+			
+			row.clear();
+			row.push_back(dist(i->id,0,0));
+				for(belt_iterator=j+1;belt_iterator!=vector_pointsL.end();++belt_iterator)
 				{
-					
-					long d=i->distance(*i1);
-					dist tempDist(i1->id,d,0);
-					dists.push_back(tempDist);
+					dists.clear();
+					POINTSL::iterator i1;
+					for(i1=(*belt_iterator).begin();i1!=(*belt_iterator).end();++i1)
+					{
 
-				}
-				sort(dists.begin(),dists.end());
-				for(int ii=0;ii<3;ii++)
-				{
-					tag+=","+lexical_cast<std::string>(dists[ii].id);
-					belt_out<<","<<dists[ii].id;
+						long d=i->distance(*i1);
+						dist tempDist(i1->id,d,0);
+						dists.push_back(tempDist);
+
+					}
+					sort(dists.begin(),dists.end());
+					for(int ii=0;ii<1;ii++)
+					{
+						/*if (belt_iterator==(j+1)) 
+						{tag+=","+lexical_cast<std::string>(dists[ii].id);}*/
+						//belt_out<<","<<dists[ii].id;
+						//cout<<","<<dists[ii].id;
+						row.push_back(dists[ii]);
+					}
+
 				}
 				
-			}
-			Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[img_id-1]);
-			assert (image.get() != 0);
-			image->readMetadata();
-			Exiv2::ExifData &exifData = image->exifData();
-			exifData["Exif.Photo.UserComment"]
-			= "charset=Ascii "+tag;
 
 
 
 
 
-			rows.push_back(row);
+				rows.push_back(row);
+
+				//cout<<endl;
+				//cout<<images[img_id-1]<<endl;
+
+				DISTS::iterator row_iterator;
+				for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
+				{
+					cout<<row_iterator->id<<",";
+					belt_out<<row_iterator->id<<",";
+					tag.clear();
+					tag="selected ";
+					tag+=lexical_cast<std::string>(row_iterator->id);
+					tag+=" pairs_with ";
+					valid=is_next_valid(row_iterator->id,row_step);
+					if(valid)
+					{
+						tag+=lexical_cast<std::string>(row_iterator->id+row_step);
+					}
+					if(row_iterator!=row.end()-1)
+					{
+						if (valid)
+						{
+							tag+=","+lexical_cast<std::string>((row_iterator+1)->id);
+						}
+						else
+						{
+							tag+=lexical_cast<std::string>((row_iterator+1)->id);
+
+						}
+					}
+					//cout<<endl<<tag<<endl;
+					Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[(row_iterator->id-1)]);
+					assert (image.get() != 0);
+					image->readMetadata();
+					Exiv2::ExifData &exifData = image->exifData();
+					exifData["Exif.Photo.UserComment"]
+					= "charset=Ascii "+tag;
+					image->writeMetadata();
+
+
+				}
+				belt_out<<endl;
+				//belt_out<<images[i->id-1]<<" ";                          //重要：从images[]数组调用时要将id-1，因为排id的时候没有0
+
+
+				for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
+				{
+					cout<<images[(*row_iterator).id-1]<<endl;
+					belt_out<<images[(*row_iterator).id-1]<<" ";
+
+				}
+				cout<<endl;
+
+
+
+
+				belt_out<<endl;
+				
+
+
+
+				
 			
-			cout<<endl;
-			cout<<images[img_id-1]<<endl;
-
-			DISTS::iterator row_iterator;
-			for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
-			{
-				belt_out<<row_iterator->id<<",";
-			}
-			belt_out<<endl;
-			belt_out<<images[i->id-1]<<" ";                          //重要：从images[]数组调用时要将id-1，因为排id的时候没有0
-
-
-			for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
-			{
-				cout<<images[(*row_iterator).id]<<endl;
-				belt_out<<images[(*row_iterator).id-1]<<" ";
-
-			}
-			cout<<endl;
-
-
-
-			
-			belt_out<<endl;
-			/*Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[img_id-1]);
-			assert (image.get() != 0);
-			image->readMetadata();
-			Exiv2::ExifData &exifData = image->exifData();
-			exifData["Exif.Photo.UserComment"]
-			= "charset=Ascii "+tag;
-=======
-
-			
->>>>>>> parent of 25f5b3c... 鍒版瘡涓�鑸甫鐨勫瀭瓒筹紝娌℃湁鐢ㄨ凯浠?
-
-		 image->writeMetadata();
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-
-=======
-			cout<<tag<<endl;
-			belt_out<<endl;
->>>>>>> parent of 25f5b3c... 鍒版瘡涓�鑸甫鐨勫瀭瓒筹紝娌℃湁鐢ㄨ凯浠?*/
-
-
-
-			//cout<<i->id<<",";
-			//belt_out<<i->id<<",";
-		}
-
+		
+		}	
 
 	}
 
@@ -488,10 +514,10 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	std::string				_inputFile,line,_outputFile,_inputDIR;
 
-	_inputFile="f:\\kl\\02.txt";
-	_inputDIR="f:\\kl";
+	_inputFile="h:\\kl\\kl\\02.txt";
+	_inputDIR="h:\\kl\\kl";
 
-	_outputFile="f:\\kl01\\result-kl01.txt";
+	_outputFile="f:\\kl\\kl\\result-kl01.txt";
 	ifstream data(_inputFile.c_str());
 	ofstream out(_outputFile.c_str());
 	vector<double> YawVec;
@@ -568,13 +594,13 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 		Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(images[j]);
-				assert (image.get() != 0);
-				image->readMetadata();
-				Exiv2::ExifData &exifData = image->exifData();
-				exifData["Exif.Photo.UserComment"]
-				= "charset=Ascii thrown";
-				cout<<images[j]<<endl;
-				image->writeMetadata();
+		assert (image.get() != 0);
+		image->readMetadata();
+		Exiv2::ExifData &exifData = image->exifData();
+		exifData["Exif.Photo.UserComment"]
+		= "charset=Ascii thrown";
+		cout<<images[j]<<endl;
+		image->writeMetadata();
 		j++;
 
 	}
