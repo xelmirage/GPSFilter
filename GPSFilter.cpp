@@ -444,7 +444,7 @@ void build_belt()
 				for(row_iterator=row.begin();row_iterator!=row.end();++row_iterator)
 				{
 					cout<<row_iterator->id<<",";
-					belt_out<<row_iterator->id<<",";
+					//belt_out<<row_iterator->id<<",";
 					tag.clear();
 					tag="selected ";
 					tag+=lexical_cast<std::string>(row_iterator->id);
@@ -477,7 +477,7 @@ void build_belt()
 
 
 				}
-				belt_out<<endl;
+				cout<<endl;
 				//belt_out<<images[i->id-1]<<" ";                          //重要：从images[]数组调用时要将id-1，因为排id的时候没有0
 
 
@@ -492,7 +492,7 @@ void build_belt()
 
 
 
-				belt_out<<endl;
+				//belt_out<<endl;
 				
 
 
@@ -668,7 +668,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	build_belt();
 
 
-	::system("pause");
+	//::system("pause");
 
 
 
