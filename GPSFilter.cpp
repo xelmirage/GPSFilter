@@ -333,7 +333,7 @@ void build_belt()
 	string tag;
 	tag.clear();
 	bool valid;
-	string _outputFile="h:\\kl\\kl\\a.txt";
+	string _outputFile="f:\\kl\\a.txt";
 	ofstream belt_out(_outputFile.c_str());
 	POINTSL::iterator i;
 
@@ -514,8 +514,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	std::string				_inputFile,line,_outputFile,_inputDIR;
 
-	_inputFile="h:\\kl\\kl\\02.txt";
-	_inputDIR="h:\\kl\\kl";
+	_inputFile="f:\\kl\\02.txt";
+	_inputDIR="f:\\kl";
 
 	_outputFile="f:\\kl\\kl\\result-kl01.txt";
 	ifstream data(_inputFile.c_str());
