@@ -13,7 +13,7 @@
 #include <iostream>
 #include <math.h>
 #include<vector>
-
+#include <getopt.h>
 
 #include <hugin_config.h>
 #include <hugin_version.h>

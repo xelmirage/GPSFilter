@@ -324,7 +324,7 @@ bool is_next_valid(int id,int step)
 	}
 	return false;
 }
-void build_belt()
+void build_belt(string outfile)
 {
 	POINTSLV::iterator belt_iterator;
 	int row_step=2;
@@ -333,7 +333,7 @@ void build_belt()
 	string tag;
 	tag.clear();
 	bool valid;
-	string _outputFile="f:\\kl\\a.txt";
+	string _outputFile=outfile;
 	ofstream belt_out(_outputFile.c_str());
 	POINTSL::iterator i;
 
@@ -510,16 +510,74 @@ void build_belt()
 
 
 }
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc,char* argv[])
 {
-	std::string				_inputFile,line,_outputFile,_inputDIR;
+	int c;
+	int optionIndex = 0;
+	std::string				_inputFile="",line="",_outputFile="",_inputDIR="";
 
-	_inputFile="f:\\kl\\02.txt";
-	_inputDIR="f:\\kl";
+	
+	const char* optstring = "o:s:g:h";
+	static struct option longOptions[] =
+    {
+		
+        {"output", required_argument, NULL, 'o' },
+        {"sourcedir", required_argument, NULL, 's' },
+        {"gpsfile", required_argument, NULL, 'g' },
+        //{"gpsoutput", required_argument, NULL, 'p' },
+        //{"stacklength", required_argument, NULL, 's' },
+        //{"linkstacks", no_argument, NULL, 'l' },
+        
+        {"help", no_argument, NULL, 'h' },
 
-	_outputFile="f:\\kl\\kl\\result-kl01.txt";
+        0
+    };
+	 while ((c = getopt_long (argc, argv, optstring, longOptions,&optionIndex)) != -1)
+    {
+        switch (c)
+        {
+			case 'g':
+				_inputFile=optarg;
+				cout<<"inputfile "<<_inputFile<<endl;
+                
+                break;
+            case 'o':
+                _outputFile=optarg;
+				cout<<"outputfile "<<_outputFile<<endl;
+                break;
+           
+            case 'p':
+                {
+                  
+                };
+                break;
+            
+           
+            case 's':
+                _inputDIR=optarg;
+				cout<<"inputDIR "<<_inputDIR<<endl;
+                break;
+           
+            
+            case ':':
+                cerr <<"Option " << longOptions[optionIndex].name << " requires a number" << endl;
+                return 1;
+                break;
+            case '?':
+                break;
+            default:
+                abort ();
+        }
+    }
+
+
+
+
+
+
+	
 	ifstream data(_inputFile.c_str());
-	ofstream out(_outputFile.c_str());
+	//ofstream out(_outputFile.c_str());
 	vector<double> YawVec;
 	vector<string> SplitVec;
 
@@ -614,7 +672,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	POINTSLV groups;
 	double deg,heading,deg1,deg2;
-	out.clear();
+//	out.clear();
 	//out<<"(*i).x"<<"    "<<"(*i).y"<<"    "<<"(*i).heading(*(i+1))"<<"    "<<"deg"<<"    "<<"(*i).yaw"<<"    "<<"deg-(*i).yaw"<<endl;;
 	//out<<"(*i).x"<<"    "<<"(*i).y"<<"    "<<"(*i).slope(*(i+1))"<<"    "<<"atan((*i).slope(*(i+1)))"<<"    "<<"deg"<<"    "<<"(*i).yaw"<<"    "<<"deg-(*i).yaw"<<endl;;
 	i=pointsL.begin()+1;
@@ -665,7 +723,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 
-	build_belt();
+	build_belt(_outputFile);
 
 
 	//::system("pause");
