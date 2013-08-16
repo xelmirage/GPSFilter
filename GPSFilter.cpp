@@ -516,7 +516,7 @@ static void usage(const char* name)
     cout << name << ": Filtting images with GPS data" << endl
          << name << " version " << DISPLAY_VERSION << endl
          << endl
-         << "Usage:  " << name << " [options] image1 [...]" << endl
+         << "Usage:  " << name << " [options]" << endl
          << endl
          << "  Options:" << endl
          << "     -o, --output=file.pto  Output Hugin PTO file." << endl
