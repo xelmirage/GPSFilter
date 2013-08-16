@@ -510,6 +510,24 @@ void build_belt(string outfile)
 
 
 }
+
+static void usage(const char* name)
+{
+    cout << name << ": Filtting images with GPS data" << endl
+         << name << " version " << DISPLAY_VERSION << endl
+         << endl
+         << "Usage:  " << name << " [options] image1 [...]" << endl
+         << endl
+         << "  Options:" << endl
+         << "     -o, --output=file.pto  Output Hugin PTO file." << endl
+       
+         << "     -s, --sourcedir=dir    directory contains images to be handled" << endl
+         << "                            (default: 1, no stacks)" << endl
+         << "     -g, --gpsfile=file.txt Specify GPS data file" << endl
+         << "     -h, --help             Shows this help" << endl
+         << endl;
+}
+
 int main(int argc,char* argv[])
 {
 	int c;
@@ -559,16 +577,19 @@ int main(int argc,char* argv[])
                 break;
            
             
-            case ':':
-                cerr <<"Option " << longOptions[optionIndex].name << " requires a number" << endl;
-                return 1;
-                break;
-            case '?':
-                break;
-            default:
-                abort ();
-        }
-    }
+			case ':':
+				cerr <<"Option " << longOptions[optionIndex].name << " requires a number" << endl;
+				return 1;
+				break;
+			case '?':
+				break;
+			case 'h':
+				usage(argv[0]);
+				return 0;
+			default:
+				abort ();
+		}
+	 }
 
 
 
